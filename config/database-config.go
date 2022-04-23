@@ -25,10 +25,19 @@ func SetupDatabaseConnection() *gorm.DB {
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {
-		panic("failed to connec database")
+		panic("failed to connect database")
 	}
 
 	db.AutoMigrate()
 
 	return db
+}
+
+func CloseDatabaseConnection(db *gorm.DB) {
+	dbSQL, err := db.DB()
+
+	if err != nil {
+		panic("failed to clase connection from DB")
+	}
+	dbSQL.Close()
 }
